@@ -24,3 +24,4 @@ venv.bak/
 **/__pycache__
 **/.DS_Stor
 .history
+db
