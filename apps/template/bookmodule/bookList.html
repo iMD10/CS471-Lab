@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Books Page {% endblock title %}
+{% block stylesheets %}
+  <style>
+    
+table, th,td {
+border: 1px solid black;
+}
+td,th {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+  </style>
+{% endblock stylesheets %}
+{% block content %}
+
+  {% comment %} <ul>
+        {% for item in books %}
+            <li> ID: {{item.id}} | Title: {{ item.title }} | Author: {{item.author}} </li>
+        {% endfor %}
+  </ul> {% endcomment %}
+
+<table>
+  <caption>Book results:</caption>
+  <tr>
+    <th> ID </th> <th> Title </th> <th> Author </th>
+  </tr>
+  {% for item in books %}
+  <tr>
+    <td>{{item.id}}</td><td>{{item.title}}</td><td>{{item.author}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}
