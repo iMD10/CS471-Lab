@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Book
 
 # def index(request):
 #   name = request.GET.get("name") or "world!"
@@ -64,3 +65,16 @@ def __getBooksList():
   book2 = {'id':56788765,'title':'Reversing: Secrets of Reverse Engineering', 'author':'E. Eilam'}
   book3 = {'id':43211234, 'title':'The Hundred-Page Machine Learning Book', 'author':'Andriy Burkov'}
   return [book1, book2, book3]
+
+
+def simple_query(requset):
+  myBooks = Book.objects.filter(title__icontains='and')
+  return render(requset, 'bookmodule/bookList.html', {'books':myBooks})
+
+def complex_query(request):
+  mybooks = Book.objects.filter(author__isnull=False).filter(title__icontains='and').filter(edition__gte = 1).exclude(price__lte = 50)[:10]
+  if len(mybooks)>= 1:
+   return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+  else:
+   return render(request, 'bookmodule/index.html')
+  
