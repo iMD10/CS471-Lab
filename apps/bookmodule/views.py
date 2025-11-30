@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render ,redirect
 from .models import Book, Publisher, Author
 from django.db.models import Q, Sum, Max, Min, Count, Avg
 
@@ -164,3 +164,54 @@ def task6(request):
  publishers_books = Publisher.objects.annotate(expensive_books = expensive)
 
  return render(request, 'bookmodule/lab9Task6.html', {'info':publishers_books})
+
+
+def CRUD_list_books(request):
+  books = Book.objects.all()
+  return render(request,'bookmodule/bookListCRUD.html',{'books':books})
+
+
+def CRUD_add_book(request):
+ authors = Author.objects.all()
+ publisher = Publisher.objects.all() 
+ if request.method == 'POST':
+  title = request.POST.get('title')
+  price = request.POST.get('price')
+  pubdate = request.POST.get('pubdate')
+  quantity = request.POST.get('quantity')
+  pub_id = request.POST.get('publisher')
+  pub_obj = Publisher.objects.get(id = pub_id)
+  
+  obj = Book(title= title, price = price, quantity= quantity, pubdate = pubdate)
+  
+  obj.save()
+  obj.publisher = pub_obj
+  obj.save()
+  authors_ids = request.POST.getlist('authors')
+  obj.authors.set(authors_ids)
+  return redirect('books.lab10.listbooks')
+ return render(request,'bookmodule/addBook.html', {'authors': authors, 'publisher': publisher})
+
+
+def CRUD_edit_book(request, bid):
+ obj = Book.objects.get(id = bid)
+ if request.method == 'POST':
+  title = request.POST.get('title')
+  price = request.POST.get('price')
+  pubdate = request.POST.get('pubdate')
+  quantity = request.POST.get('quantity')
+
+  obj.title = title
+  obj.price = price
+  obj.quantity = quantity
+  obj.pubdate = pubdate
+  obj.id = bid
+  obj.save()
+  return redirect('books.lab10.listbooks')
+ return render(request,'bookmodule/editBook.html', {'book': obj})
+
+
+def CRUD_delete_book(request, bid):
+    book = Book.objects.get(id=bid)
+    book.delete()
+    return redirect('books.lab10.listbooks')

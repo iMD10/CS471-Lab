@@ -1,0 +1,90 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Books Page {% endblock title %}
+{% block stylesheets %}
+  <style>
+    
+table, th,td {
+border: 1px solid black;
+}
+td,th {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #4A90E2;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+
+  </style>
+{% endblock stylesheets %}
+{% block content %}
+
+  {% comment %} <ul>
+        {% for item in books %}
+            <li> ID: {{item.id}} | Title: {{ item.title }} | Author: {{item.author}} </li>
+        {% endfor %}
+  </ul> {% endcomment %}
+
+<a href="{% url 'books.lab10.addbook' %}" class="btn">
+    Add a book
+</a>
+
+<table>
+  <caption>Book results:</caption>
+  <tr>
+    <th> ID </th> <th> Title </th> <th> Price </th> <th> Quantity </th><th> Rating </th><th>Publisher </th><th>Publishing date </th><th>Authors</th>
+  </tr>
+  {% for item in books %}
+  <tr>
+    <td>{{item.id}}</td>
+    <td>{{item.title}}</td>
+    <td>{{item.price}}</td>
+    <td>{{item.quantity}}</td>
+    <td>{{item.rating}}</td>
+    <td>{{item.publisher.name}}</td> 
+    <td>{{item.pubdate}}</td>
+    <td>
+      {% for author in item.authors.all %}
+       |{{ author.name }}|
+      {% endfor %}
+    </td>
+    <td>    
+      <a href="{% url 'books.lab10.editbook' item.id %}" class="btn-update">Update</a>
+    </td> 
+    <td>
+      <a href="{% url 'books.lab10.deletebook' item.id %}" class="btn-delete">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}
+
+
+
+
