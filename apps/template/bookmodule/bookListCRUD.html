@@ -50,7 +50,7 @@ table {
         {% endfor %}
   </ul> {% endcomment %}
 
-<a href="{% url 'books.lab10.addbook' %}" class="btn">
+<a href="{% url 'books.lab10_2.addbook' %}" class="btn">
     Add a book
 </a>
 
@@ -74,7 +74,7 @@ table {
       {% endfor %}
     </td>
     <td>    
-      <a href="{% url 'books.lab10.editbook' item.id %}" class="btn-update">Update</a>
+      <a href="{% url 'books.lab10_2.editbook' item.id %}" class="btn-update">Update</a>
     </td> 
     <td>
       <a href="{% url 'books.lab10.deletebook' item.id %}" class="btn-delete">Delete</a>

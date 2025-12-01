@@ -1,6 +1,8 @@
 from django.shortcuts import render ,redirect
 from .models import Book, Publisher, Author
 from django.db.models import Q, Sum, Max, Min, Count, Avg
+from .forms import BookForm
+
 
 # def index(request):
 #   name = request.GET.get("name") or "world!"
@@ -215,3 +217,35 @@ def CRUD_delete_book(request, bid):
     book = Book.objects.get(id=bid)
     book.delete()
     return redirect('books.lab10.listbooks')
+
+def DjCRUD_add_book(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form.save_m2m()      
+            return redirect("books.lab10.listbooks")
+    else:
+        form = BookForm()
+
+    return render(request, "bookmodule/add_book.html", {"form": form})
+
+
+
+
+def DjCRUD_edit_book(request, bid):
+    book = Book.objects.get(id=bid)
+
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect("books.lab10.listbooks")
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, "bookmodule/update_book.html", {"form": form})
+
+
+def DjCRUD_delete_book(request):
+ pass
