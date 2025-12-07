@@ -32,7 +32,20 @@ urlpatterns = [
  
  path('lab10_part2/addbook', views.DjCRUD_add_book, name='books.lab10_2.addbook'),
  path('lab10_part2/editbook/<int:bid>', views.DjCRUD_edit_book, name='books.lab10_2.editbook'),
- path('lab10_part2/deletebook/<int:bid>', views.DjCRUD_delete_book, name='books.lab10_2.deletebook'),
+ path('student/liststudents', views.list_students, name='students.liststudents'),
+ path('student/addstudent', views.add_student, name='students.addstudent'),
+ path('student/editstudent/<int:sid>', views.edit_student, name='students.editstudent'),
+ path('student/deletestudent/<int:sid>', views.delete_student, name='students.deletestudent'),
+ path('library/listlibrary', views.list_library, name='library.listlibrary'),
+ path('library/addlibrary', views.add_library, name='library.addlibrary'),
+ path('library/editlibrary/<int:lid>', views.edit_library, name='library.editlibrary'),
+ path('library/deletelibrary/<int:lid>', views.delete_library, name='library.deletelibrary'),
+ 
+
+
+
+
+ 
 
 
 

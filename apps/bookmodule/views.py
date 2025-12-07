@@ -1,7 +1,7 @@
 from django.shortcuts import render ,redirect
-from .models import Book, Publisher, Author
+from .models import Book, Publisher, Author, Student, Address, Library
 from django.db.models import Q, Sum, Max, Min, Count, Avg
-from .forms import BookForm
+from .forms import BookForm, StudentForm, LibraryForm
 
 
 # def index(request):
@@ -247,5 +247,70 @@ def DjCRUD_edit_book(request, bid):
     return render(request, "bookmodule/update_book.html", {"form": form})
 
 
-def DjCRUD_delete_book(request):
- pass
+def list_students(request):
+  students = Student.objects.all()
+  return render(request, "bookmodule/student/list_students.html", {'students': students})
+
+def add_student(request):
+    if request.method == "POST":
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("students.liststudents")
+    else:
+        form = StudentForm()
+
+    return render(request, "bookmodule/student/add_student.html", {"form": form})
+
+def edit_student(request, sid):
+    student = Student.objects.get(id=sid)
+
+    if request.method == "POST":
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect("students.liststudents")
+    else:
+        form = StudentForm(instance=student)
+
+    return render(request, "bookmodule/student/edit_student.html", {"form": form})
+
+def delete_student(request, sid):
+    student = Student.objects.get(id=sid)
+    student.delete()
+    return redirect('students.liststudents')
+
+
+
+
+def list_library(request):
+    libraries = Library.objects.all()
+    return render(request, "bookmodule/library/list_library.html", {'libraries': libraries})
+
+def add_library (request):
+    if request.method == "POST":
+        form = LibraryForm(request.POST,  request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("library.listlibrary")
+    else:
+        form = LibraryForm()
+
+    return render(request, "bookmodule/library/add_library.html", {"form": form})
+def edit_library (request, lid):
+    library = Library.objects.get(id=lid)
+
+    if request.method == "POST":
+        form = LibraryForm(request.POST,  request.FILES, instance=library)
+        if form.is_valid():
+            form.save()
+            return redirect("library.listlibrary")
+    else:
+        form = LibraryForm(instance=library)
+
+    return render(request, "bookmodule/library/edit_library.html", {"form": form})
+
+def delete_library (request, lid):
+    library = Library.objects.get(id=lid)
+    library.delete()
+    return redirect('library.listlibrary')

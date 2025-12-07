@@ -1,0 +1,82 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Libraries Page {% endblock title %}
+{% block stylesheets %}
+  <style>
+    
+table, th,td {
+border: 1px solid black;
+}
+td,th {
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #4A90E2;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+
+  </style>
+{% endblock stylesheets %}
+{% block content %}
+
+ 
+<a href="{% url 'library.addlibrary' %}" class="btn">
+    Add a library
+</a>
+
+<table>
+  <caption>library results:</caption>
+  <tr>
+    <th> ID </th> <th> Name </th> <th> Image </th> 
+  </tr>
+  {% for item in libraries %}
+  <tr>
+    <td>{{item.id}}</td>
+    <td>{{item.name}}</td>
+    <td>
+            {% if item.image %}
+                <img src="{{ item.image.url }}" width="150">
+            {% else %}
+                No image
+            {% endif %}
+    </td>
+    <td>    
+      <a href="{% url 'library.editlibrary' item.id %}" class="btn-update">Update</a>
+    </td> 
+    <td>
+      <a href="{% url 'library.deletelibrary' item.id %}" class="btn-delete">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock content %}
+
+
+
+

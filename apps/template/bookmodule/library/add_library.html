@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Add a library Page {% endblock title %}
+
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.show_image|safe }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock content %}

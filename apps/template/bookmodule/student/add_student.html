@@ -1,0 +1,13 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block title %} Add a Library Page {% endblock title %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock content %}
